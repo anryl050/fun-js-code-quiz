@@ -1,0 +1,18 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.header{
+display: flex;
+justify-content: space-between;
+margin: 10px;
+padding: 10px;
+};
+
+.content{
+    display: flex;
+    justify-content: center;
+};
+
