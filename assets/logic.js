@@ -4,6 +4,28 @@
 // WHEN I click the start button
 // THEN a timer starts and I am presented with a question
 
+// When "Start Quiz" button is pressed, the timer starts
+let start = document.querySelector("#start-button");
+
+start.addEventListener ("click", function(){
+    var timeEl = document.querySelector(".timer");
+    var secondsLeft = 75;
+    function setTime() {
+    let timeInterval = setInterval (function() {
+        secondsLeft--;
+        timeEl.textContent = "Time Remaining: " + secondsLeft;
+
+        if(secondsLeft === 0) {
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+} setTime ();
+}
+);
+
+//When "Start Quiz" button is pressed, first question appears
+
+
 
 // Step 2:
 // WHEN I answer a question
@@ -27,22 +49,3 @@ var questionsIndex = 0;
 var multipleQuestions = [
 
 ];
-
-var timeEl = document.querySelector(".timer");
-var secondsLeft = 75;
-
-
-
-// Timer function
-// function setTime() {
-//     var timeInterval = setInterval (function() {
-//         secondsLeft--;
-//         timeEl.textContent = "Time Remaining: " + secondsLeft;
-
-//         if(secondsLeft === 0) {
-//             clearInterval(timeInterval);
-//             sendMessage();
-//         }
-//     }, 1000);
-// }
-// setTime ();
