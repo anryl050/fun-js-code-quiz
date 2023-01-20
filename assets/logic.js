@@ -31,6 +31,42 @@ start.addEventListener ("click", function(){
 // WHEN I answer a question
 // THEN I am presented with another question
 
+var score = 0;
+var questionsIndex = 0;
+
+var multipleQuestions = [
+{
+    question:"JavaScript is an _______ language?",
+    multAnswers:["Object-Oriented", "Object-Based", "Procedural", "None of the Above"],
+    answer:"Object-Oriented",
+},
+
+{
+    question:"Which of the following keywords is used to define a variable in Javascript",
+    multAnswers:["var", "let", "Both A and B", "None of the Above"],
+    answer:"Both A and B",
+},
+
+{
+    question:"Which of the following methods is used to access HTML elements using Javascript?",
+    multAnswers:["getElementbyId()", "getElementsByClassName()", "Both A and B", "None of the Above"],
+    answer:"Both A and B", 
+},
+
+{
+    question:"Upon encountering empty statements, what does the Javascript Interpreter do?",
+    multAnswers:["Throws an error", "Ignores the statements", "Gives a warning", "None of the Above"],
+    answer:"Ignores the statements", 
+},
+
+{
+    question:"Which of the following methods can be used to display data in some form using Javascript?",
+    multAnswers:["document.write()", "console,log()", "window.alert()", "All of the Above"],
+    answer:"All of the Above", 
+},
+
+];
+
 // Step 3:
 // WHEN I answer a question incorrectly
 // THEN time is subtracted from the clock
@@ -43,9 +79,3 @@ start.addEventListener ("click", function(){
 // WHEN the game is over
 // THEN I can save my initials and my score
 
-var score = 0;
-var questionsIndex = 0;
-
-var multipleQuestions = [
-
-];
