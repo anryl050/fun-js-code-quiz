@@ -37,6 +37,11 @@ main {
   padding: 20px;
 }
 
+#highscore {
+  text-align: center;
+  padding: 20px;
+}
+
 button {
   display: inline-block;
   background-color: var(--button-color);
@@ -54,7 +59,7 @@ button:hover {
 ul{
   align-items: center;
   padding-left: 20px;
-  gap:5px;
+  font-weight: 5px;
 }
 
 li{
@@ -65,9 +70,15 @@ li{
   padding: 10px;
   border-radius: 3px;
   color: var(--text-color);
+  list-style: none
 }
 
-.hide {
+li:hover {
+  background-color: #86ac9d;
+  cursor: pointer;
+}
+
+.hiden {
   display:none;
   padding: 20px;
   margin: auto;

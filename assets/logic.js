@@ -78,29 +78,36 @@ start.addEventListener ("click", function(){
     });
 
 //When "Start Quiz" button is pressed, first question appears
-// TODO: this function does not return expected results
+
 function startGame(currentQuestionIndex){
     startQuiz.innerText = ""
     newUl.innerText = ""
-    for (var i; i < questionList.length; i++ ){
-        var userQuestion = questionList[currentQuestionIndex].question;
-        var usersMultiChoice = questionList[currentQuestionIndex].choices;
-        startQuiz.textContent = userQuestion;
-    }
-
-    usersMultiChoice.forEach(function (newItem){
-        var insertNewItem = docuemtn.createElement("li");
-        insertNewIetm.textContent = newItem;
+    var quizQuestion = questionList[currentQuestionIndex].question;
+    var quizChoices = questionList[currentQuestionIndex].choices;
+    startQuiz.textContent = quizQuestion;
+    
+    // function to create a new list for every new question from the Questions array.
+    quizChoices.forEach(function (newItem){
+        var insertNewItem = document.createElement("li");
+        insertNewItem.textContent = newItem;
         startQuiz.appendChild(newUl);
+        // added <br> element after each question before the list
+        startQuiz.appendChild(document.createElement("br"))
         newUl.appendChild(insertNewItem);
-        insertNewItem.addEventListener(click,(getAnswer));
-        })
+        // added <br> element after each choice option in the list
+        newUl.appendChild(document.createElement("br"))
+        insertNewItem.addEventListener("click",(getAnswer));
+    })
 };
 
 //! Step 2:
 //! WHEN I answer a question
 //! THEN I am presented with another question
 
+function getAnswer(){
+
+    // currentQuestionIndex++  - - this needs  to be added at the end of my getAnswers function
+}
 
 
 
