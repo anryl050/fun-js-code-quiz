@@ -47,15 +47,18 @@ var startQuiz = document.getElementById("start-quiz");
 // variables for Start button
 var start = document.getElementById("start-button");
 
+// variable for Next button
+var next = document.getElementById("next-button");
+
 // variables for timer
 var timeEl = document.querySelector("#timer");
 var secondsLeft = 75;
 
 var answer = document.querySelector(".answer");
 
-var quizQuestion = questionList[currentQuestionIndex].question;
-var quizChoices = questionList[currentQuestionIndex].choices;
 var insertNewItem = document.createElement("li");
+
+var answerDescription = document.createElement("section");
 
 //! Step 1:
 //! WHEN I click the start button
@@ -74,18 +77,23 @@ let timeInterval = setInterval (function() {
     }, 1000);
 };
 
+
 //function to call the array with questions and to display the first question
 function startGame(){
     startQuiz.innerText = ""
     newUl.innerText = ""
+
+    var quizQuestion = questionList[currentQuestionIndex].question;
+    var quizChoices = questionList[currentQuestionIndex].choices;
     startQuiz.textContent = quizQuestion;
+    
         
     // function to create a new list for every new question from the Questions array.
     quizChoices.forEach(function (newItem){
+        
         var insertNewItem = document.createElement("li");
         insertNewItem.textContent = newItem;
-        currentQuestionIndex++; 
-
+        
         insertNewItem.setAttribute("class","answer");
         startQuiz.appendChild(newUl);
         // added <br> element after each question before the list
@@ -94,8 +102,10 @@ function startGame(){
         // added <br> element after each choice option in the list
         newUl.appendChild(document.createElement("br"))
         // insertNewItem.addEventListener("click",(checkAnswer));
+        insertNewItem.addEventListener("click",(getAnswer));
         console.log(currentQuestionIndex)
     })
+
     };
 
 // event Listener to start the timer and the quiz (ref to functions setTime and startGame)
@@ -103,29 +113,58 @@ start.addEventListener ("click", function(){
     setTime ()
     startGame(currentQuestionIndex)
     });
-    console.log(currentQuestionIndex)
 
-insertNewItem.addEventListener("click",(checkAnswer));
 
 //! Step 2:
 //! WHEN I answer a question
 //! THEN I am presented with another question
 
 // function to get the get the answer and present the next question
-function checkAnswer(event){
+function getAnswer(event){
     var choiceBtn = event.target;
+    checkAnswer(choiceBtn)
+    
+    var quizQuestion = questionList[currentQuestionIndex].question;
+    var quizChoices = questionList[currentQuestionIndex].choices;
+    startQuiz.textContent = quizQuestion;
+    
+    // function to create a new list for every new question from the Questions array.
+    quizChoices.forEach(function (newItem){
+        
+        var insertNewItem = document.createElement("li");
+        insertNewItem.textContent = newItem;
+        
+        insertNewItem.setAttribute("class","answer");
+        startQuiz.appendChild(newUl);
+        // added <br> element after each question before the list
+        startQuiz.appendChild(document.createElement("br"))
+        newUl.appendChild(insertNewItem);
+        // added <br> element after each choice option in the list
+        newUl.appendChild(document.createElement("br"))
+        // insertNewItem.addEventListener("click",(checkAnswer));
+        insertNewItem.addEventListener("click",(getAnswer));
+    })
+        
+        console.log(currentQuestionIndex)
+    };
+
+function checkAnswer(choiceBtn){
+    if(choiceBtn === questionList[currentQuestionIndex].answer){  
 
     var answerDescription = document.createElement("section");
-    answerDescription.setAttribute("class ","answerDescription", "style", "color:green");
+    // answerDescription.setAttribute("class","answerDescription", "style", "color:green");
+    answerDescription.setAttribute("class","answerDescription")
 
-    if(choiceBtn.value == questionList[currentQuestionIndex].answer){
-        score++; 
-        console.log("answer!")
-        answerDescription.textContent = "Correct Answer!"
+    score++; 
+    answerDescription.textContent = "Correct Answer!"
 
-    } else{
+    } else 
+
+    {
         secondsLeft = secondsLeft - incorrectAnswer;
-        answerDescription.setAttribute("style", "color:red");
+
+        var answerDescription = document.createElement("section");
+        // answerDescription.setAttribute("style", "color:red");
         answerDescription.textContent = "Wrong Answer!"
     }
     currentQuestionIndex++; 
