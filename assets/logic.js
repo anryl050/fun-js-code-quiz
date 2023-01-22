@@ -34,15 +34,12 @@ var questionList = [
 },
 ];
 
+//List of global variables
 var scoreResult;
 var correctAnswer = 0;
 var currentQuestionIndex = 0;
 var incorrectAnswer = 20;
 var newUl = document.createElement("ul");
-// TODO: can the variable up to be replaced with the variables below?
-// var newUl = document.getElementById("norderedQuestList");
-// var newLi = document.getElementById("norderedQuestList");
-
 
 // variables to start the quiz
 var startQuiz = document.getElementById("start-quiz");
@@ -50,16 +47,21 @@ var startQuiz = document.getElementById("start-quiz");
 // variables for Start button
 var start = document.getElementById("start-button");
 
-
 // variables for timer
 var timeEl = document.querySelector("#timer");
 var secondsLeft = 75;
+
+var answer = document.querySelector(".answer");
+
+var quizQuestion = questionList[currentQuestionIndex].question;
+var quizChoices = questionList[currentQuestionIndex].choices;
+var insertNewItem = document.createElement("li");
 
 //! Step 1:
 //! WHEN I click the start button
 // !THEN a timer starts and I am presented with a question
 
-// When "Start Quiz" button is pressed, the timer starts
+// function for Timer
 function setTime() {
 
 let timeInterval = setInterval (function() {
@@ -72,56 +74,81 @@ let timeInterval = setInterval (function() {
     }, 1000);
 };
 
-start.addEventListener ("click", function(){
-    setTime ()
-    startGame(currentQuestionIndex)
-    });
-
-//When "Start Quiz" button is pressed, first question appears
-
-function startGame(currentQuestionIndex){
+//function to call the array with questions and to display the first question
+function startGame(){
     startQuiz.innerText = ""
     newUl.innerText = ""
-    var quizQuestion = questionList[currentQuestionIndex].question;
-    var quizChoices = questionList[currentQuestionIndex].choices;
     startQuiz.textContent = quizQuestion;
-    
+        
     // function to create a new list for every new question from the Questions array.
     quizChoices.forEach(function (newItem){
         var insertNewItem = document.createElement("li");
         insertNewItem.textContent = newItem;
+        currentQuestionIndex++; 
+
+        insertNewItem.setAttribute("class","answer");
         startQuiz.appendChild(newUl);
         // added <br> element after each question before the list
         startQuiz.appendChild(document.createElement("br"))
         newUl.appendChild(insertNewItem);
         // added <br> element after each choice option in the list
         newUl.appendChild(document.createElement("br"))
-        insertNewItem.addEventListener("click",(getAnswer));
+        // insertNewItem.addEventListener("click",(checkAnswer));
+        console.log(currentQuestionIndex)
     })
-};
+    };
+
+// event Listener to start the timer and the quiz (ref to functions setTime and startGame)
+start.addEventListener ("click", function(){
+    setTime ()
+    startGame(currentQuestionIndex)
+    });
+    console.log(currentQuestionIndex)
+
+insertNewItem.addEventListener("click",(checkAnswer));
 
 //! Step 2:
 //! WHEN I answer a question
 //! THEN I am presented with another question
 
-function getAnswer(){
+// function to get the get the answer and present the next question
+function checkAnswer(event){
+    var choiceBtn = event.target;
 
-    // currentQuestionIndex++  - - this needs  to be added at the end of my getAnswers function
-}
+    var answerDescription = document.createElement("section");
+    answerDescription.setAttribute("class ","answerDescription", "style", "color:green");
 
+    if(choiceBtn.value == questionList[currentQuestionIndex].answer){
+        score++; 
+        console.log("answer!")
+        answerDescription.textContent = "Correct Answer!"
 
+    } else{
+        secondsLeft = secondsLeft - incorrectAnswer;
+        answerDescription.setAttribute("style", "color:red");
+        answerDescription.textContent = "Wrong Answer!"
+    }
+    currentQuestionIndex++; 
+};
 
 //! Step 3:
 //! WHEN I answer a question incorrectly
 //! THEN time is subtracted from the clock
 
+// timer function so subtract the time from the wron answer? 
+// if answer is wrong, display wrong at the bottom of the quiz
+// use similar function as above but configure subtraction by using 'if'?
 
 //! Step 4:
 //! WHEN all questions are answered or the timer reaches 0
 //! THEN the game is over
 
+// function to stop the game at 0seconds or when the last question is answered (maybe use 'if'?) 
 
 //! Step 5
 //! WHEN the game is over
 //! THEN I can save my initials and my score
-
+// show the score
+// enter initials
+// function to store the infor and display back in the High Score
+// configure the clear button
