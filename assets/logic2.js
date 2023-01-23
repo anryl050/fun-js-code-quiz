@@ -47,6 +47,7 @@ var newUl = document.createElement("ul");
 // variables for timer
 var timeEl = document.querySelector("#timer");
 var secondsLeft = 75;
+var stopClock = 0;
 
 // variables to start the quiz
 var startQuiz = document.getElementById("start-quiz");
@@ -58,24 +59,56 @@ var submit = document.getElementById("submit-button");
 
 // evelt listerner for Start button
 start.addEventListener ("click", function(){
-    setTime ()
-    startGame(currentQuestionIndex)
+     setTime ()
+     startGame(currentQuestionIndex)
     });   
 
 // function for Timer
+
+
+// function setTime() {
+//     if (stopClock === 0){
+//         stopClock = setInterval (function(){
+//             secondsLeft--;
+//             timeEl.textContent = secondsLeft;
+
+//             if (stopClock <= 0){
+//                 clearInterval(stopClock)
+//                 finishQuiz()
+//                 timeEl.textContent = "No more time left!"
+//             } 
+//          }, 1000);
+//         }
+//     startGame(currentQuestionIndex);
+//     };
+
 function setTime() {
 
-let timeInterval = setInterval (function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft;
+    if(stopClock === 0){
+    stopClock = setInterval (function() {
+        secondsLeft--;
+        timeEl.textContent = secondsLeft;
 
-    if(secondsLeft === 0) {
-        clearInterval(timeInterval);
-        finishQuiz();
-        timeEl.textContent = "No more time left!"
+        if(secondsLeft <= 0) {
+            clearInterval(stopClock);
+            finishQuiz();
+            timeEl.textContent = "No more time left!"
+        }
+        }, 1000);
     }
-    }, 1000);
-    startGame(currentQuestionIndex);
+        startGame(currentQuestionIndex);
+
+// let timeInterval = setInterval (function() {
+//     secondsLeft--;
+//     timeEl.textContent = secondsLeft;
+
+//     if(secondsLeft === 0) {
+//         clearInterval(timeInterval);
+//         finishQuiz();
+//         timeEl.textContent = "No more time left!"
+//     }
+//     }, 1000);
+//     startGame(currentQuestionIndex);
 };
 
 function startGame(currentQuestionIndex){
@@ -135,6 +168,10 @@ function startGame(currentQuestionIndex){
         var allDoneScreen = document.getElementById("finish");
         allDoneScreen.removeAttribute("class");
         var finalScoreEl = document.getElementById("quiz-score");
-        finalScoreEl.textContent = timeEl;
-    
+        
+        if (secondsLeft >= 0) {
+            var timeLeft = secondsLeft;
+            clearInterval(stopClock);
+            finalScoreEl.textContent = timeLeft;
+    }
     }
