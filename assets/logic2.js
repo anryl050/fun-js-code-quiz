@@ -131,10 +131,10 @@ function startGame(currentQuestionIndex){
     };
 
     function finishQuiz(){
-        startQuiz.innerText = "";
-
-        var allDoneTitle = document.getElementById("#ad-header");
-        allDoneTitle.innerText = "<h2> All Done! </h2>"
-        console.log(h2)
-        //  
+             
+        var allDoneScreen = document.getElementById("finish");
+        allDoneScreen.removeAttribute("class");
+        var finalScoreEl = document.getElementById("quiz-score");
+        finalScoreEl.textContent = timeEl;
+    
     }

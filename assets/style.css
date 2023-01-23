@@ -81,9 +81,9 @@ li:hover {
 
 .hide {
   display:none;
-  padding: 20px;
+  /* padding: 20px;
   margin: auto;
-  max-width: 450px;
+  max-width: 450px; */
 }
 
 #answerDescription{
