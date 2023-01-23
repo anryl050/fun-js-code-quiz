@@ -32,7 +32,7 @@ main {
   max-width: 450px; 
 }
 
-#start-quiz {
+#start-quiz, #questions {
   text-align: center;
   padding: 20px;
 }
@@ -62,6 +62,7 @@ ul{
   font-weight: 5px;
 }
 
+
 li{
   background-color: var(--button-color);
   font-size: 15px;
@@ -83,4 +84,13 @@ li:hover {
   padding: 20px;
   margin: auto;
   max-width: 450px;
+}
+
+#answerDescription{
+  margin: auto;
+  max-width: 450px;
+  color: var(black);
+  font-size: 15px;
+  font-weight: 10px;
+  text-decoration: underline;
 }
