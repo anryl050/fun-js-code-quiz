@@ -41,6 +41,8 @@ var score = 0;
 var currentQuestionIndex = 0;
 var incorrectAnswer = 20;
 var newUl = document.createElement("ul");
+// var allDoneScreen = document.querySelector("hide");
+
 
 // variables for timer
 var timeEl = document.querySelector("#timer");
@@ -69,13 +71,16 @@ let timeInterval = setInterval (function() {
 
     if(secondsLeft === 0) {
         clearInterval(timeInterval);
+        finishQuiz();
+        timeEl.textContent = "No more time left!"
     }
     }, 1000);
+    startGame(currentQuestionIndex);
 };
 
 function startGame(currentQuestionIndex){
-    startQuiz.innerText = ""
-    newUl.innerText = ""
+    startQuiz.innerText = "";
+    newUl.innerText = "";
 
     for (var i = 0; i <questionList.length; i++) {
     var quizQuestion = questionList[currentQuestionIndex].question;
@@ -91,26 +96,29 @@ function startGame(currentQuestionIndex){
         newUl.appendChild(insertNewItem);
         newUl.appendChild(document.createElement("br"))
         insertNewItem.addEventListener("click",(getAnswer));
-        console.log("hi!")
+        console.log(currentQuestionIndex) 
     })
     };
+    console.log(currentQuestionIndex);
 
-    function getAnswer(e){
-        var choiceBtn = e.target;
+    function getAnswer(event){
+        var choiceBtn = event.target.innerText;
+        var correctAnswer = questionList[currentQuestionIndex].answer;
+        console.log(choiceBtn)
 
-        if(choiceBtn === questionList[currentQuestionIndex].answers){
-            var answerDescription = document.createElement("footer");
+            var answerDescription = document.createElement("section");
             answerDescription.setAttribute("id","answerDescription");
-            answerDescription.setAttribute("style", "color:green");
-            score++; 
-            answerDescription.textContent = "Correct Answer!"  
-        } else {
-            secondsLeft = secondsLeft - incorrectAnswer;
-            var answerDescription = document.createElement("footer");
-            answerDescription.setAttribute("style", "color:red");
-            answerDescription.textContent = "Wrong Answer!"
-        }
-        
+
+            if(choiceBtn === correctAnswer){
+                score++; 
+                answerDescription.textContent = "Correct Answer!"  
+                answerDescription.setAttribute("style", "color:green");
+            } else {
+                secondsLeft = secondsLeft - incorrectAnswer;
+                answerDescription.textContent = "Wrong Answer!"
+                answerDescription.setAttribute("style", "color:red");
+            // }
+    }
         currentQuestionIndex++; 
         
         if (currentQuestionIndex >= questionList.lenght) {
@@ -119,8 +127,14 @@ function startGame(currentQuestionIndex){
         } else {
             startGame(currentQuestionIndex);
         }
+        startQuiz.appendChild(answerDescription);
     };
 
     function finishQuiz(){
-        startQuiz.innerText = ""
+        startQuiz.innerText = "";
+
+        var allDoneTitle = document.getElementById("#ad-header");
+        allDoneTitle.innerText = "<h2> All Done! </h2>"
+        console.log(h2)
+        //  
     }
