@@ -1,21 +1,8 @@
-// 1. click start button -  timer starts and first question appears
-// 2. create a function for a timer
-    // if the start button is pressed, then the clock starts. 
-// 3. create a function for start quiz (to make first question appear)
-    // if the start button is pressed, the 1st question (index 0)
-// add event listener to activate the functions
-// 4. create a function to grab the questions
-        // create a "for" loop to make the questions appear:
-        // 1. Grabs question from index 0 (increments by 1 each loop)
-        // 2. Grabs answers from choices at that specific array
-        // 3. Check if right or wrong
-        // 4. Clear question
-        // 5. Clear answer
-// 5. create a function to grab the answers 
-    // note 4 and 5 can be combined together
-// 6. create a function to compare the user choice to the correct answer
-// 7. create a function to end the quiz.
+//TODO: GIVEN I am taking a code quiz
 
+// List of Variables
+
+// variable for questions array. Questions from: https://www.interviewbit.com/javascript-mcq/
 var questionList = [
 {   question:"JavaScript is an _______ language?",
     choices:["Object-Oriented", "Object-Based", "Procedural", "None of the Above"],
@@ -37,18 +24,21 @@ var questionList = [
     answer:"All of the Above", },
 ];
 
+// var for default value of the user's score
 var score = 0;
+// var for the total question index
 var currentQuestionIndex = 0;
+// var for seconds removed for each incorrect question
 var incorrectAnswer = 20;
+// var for the new Ul
 var newUl = document.createElement("ul");
-// var allDoneScreen = document.querySelector("hide");
-
+// var for the user's initials
+var playerName = document.getElementById("userName");
 
 // variables for timer
 var timeEl = document.querySelector("#timer");
 var secondsLeft = 75;
 var stopClock = 0;
-
 
 // variables to start the quiz
 var startQuiz = document.getElementById("start-quiz");
@@ -58,16 +48,18 @@ var start = document.getElementById("start-button");
 var submit = document.getElementById("submit-button");
 // submit.textContent = "Submit";
 
-// evelt listerner for Start button
+// TODO: Step 1:
+// TODO: WHEN I click the start button
+// TODO: THEN a timer starts and I am presented with a question
+
+// event listerner for Start button: triggers start of the timer and of the Quiz
 start.addEventListener ("click", function(){
      setTime ()
      startGame(currentQuestionIndex)
     });   
 
 // function for Timer
-
 function setTime() {
-
     if(stopClock === 0){
     stopClock = setInterval (function() {
         secondsLeft--;
@@ -75,36 +67,30 @@ function setTime() {
 
         if(secondsLeft <= 0) {
             clearInterval(stopClock);
-            finishQuiz();
+            finishGame();
             timeEl.textContent = "No more time left!"
         }
         }, 1000);
     }
         startGame(currentQuestionIndex);
-
-// let timeInterval = setInterval (function() {
-//     secondsLeft--;
-//     timeEl.textContent = secondsLeft;
-
-//     if(secondsLeft === 0) {
-//         clearInterval(timeInterval);
-//         finishQuiz();
-//         timeEl.textContent = "No more time left!"
-//     }
-//     }, 1000);
-//     startGame(currentQuestionIndex);
 };
 
+// TODO:Step 2
+// TODO:WHEN I answer a question
+// TODO:THEN I am presented with another question
+
+// function to start the Quiz
 function startGame(currentQuestionIndex){
     startQuiz.innerText = "";
     newUl.innerText = "";
 
+    // for loop to populate next question and its choices. Once the last question is reached, the loop stops. 
     for (var i = 0; i <questionList.length; i++) {
     var quizQuestion = questionList[currentQuestionIndex].question;
     var quizAnswers = questionList[currentQuestionIndex].choices;
     startQuiz.textContent = quizQuestion;}
             
-    // function to create a new list for every new question from the Questions array.
+    // function to create a new list item for choice options for each question
     quizAnswers.forEach(function (newItem){
         var insertNewItem = document.createElement("li");
         insertNewItem.textContent = newItem;
@@ -112,54 +98,110 @@ function startGame(currentQuestionIndex){
         startQuiz.appendChild(document.createElement("br"))
         newUl.appendChild(insertNewItem);
         newUl.appendChild(document.createElement("br"))
-        insertNewItem.addEventListener("click",(getAnswer));
+        insertNewItem.addEventListener("click",(fetchAnswer));
+        // check point
         console.log(currentQuestionIndex) 
     })
     };
+    // check point
     console.log(currentQuestionIndex);
 
-    function getAnswer(event){
-        var choiceBtn = event.target.innerText;
-        var correctAnswer = questionList[currentQuestionIndex].answer;
-        console.log(choiceBtn)
+// TODO:Step 3
+// TODO: WHEN I answer a question incorrectly
+// TODO: THEN time is subtracted from the clock
 
-            var answerDescription = document.createElement("section");
-            answerDescription.setAttribute("id","answerDescription");
+// function to obtain the answers for each question
+function fetchAnswer(event){
+    var choiceBtn = event.target.innerText;
+    var correctAnswer = questionList[currentQuestionIndex].answer;
+    var answerDescription = document.createElement("section");
+    answerDescription.setAttribute("id","answerDescription");
 
-            if(choiceBtn === correctAnswer){
-                score++; 
-                answerDescription.textContent = "Correct Answer!"  
-                answerDescription.setAttribute("style", "color:green");
-            } else {
-                secondsLeft = secondsLeft - incorrectAnswer;
-                answerDescription.textContent = "Wrong Answer!"
-                answerDescription.setAttribute("style", "color:red");
-            }
+    // for each correct answer, a text displays at the bottom alerting the user that the correct answer was selected. 
+    if(choiceBtn === correctAnswer){
+        score++; 
+        answerDescription.textContent = "Correct Answer!"  
+        answerDescription.setAttribute("style", "color:green");
+    } else {
+        // for each incorrect answer, a text displays at the bottom alerting the user that the wrong answer was selected. Penalty time is subtracted (-20 seconds).
+        secondsLeft = secondsLeft - incorrectAnswer;
+        answerDescription.textContent = "Wrong Answer!"
+        answerDescription.setAttribute("style", "color:red");
+    }
+    // check point
+    console.log(choiceBtn)
+
+    // function to clear out the "answerDescription", once it was presented to the user. 
+    setTimeout(function() {
+        answerDescription.setAttribute("class", "hide");
+        }, 500);
+
+    currentQuestionIndex++; 
+    
+// TODO:Step 4
+// TODO:WHEN all questions are answered or the timer reaches 0
+// TODO:THEN the game is over
+
+    // once the last question is reached, the finishGame function is triggered, and the timmer stops. 
+    if (currentQuestionIndex >= questionList.length){
+        finishGame();   
+        // check point 
+        console.log("end game!")
+        } else {
+        startGame(currentQuestionIndex);
+    }
+    startQuiz.appendChild(answerDescription);
+};
+
+// TODO:Step 5
+// TODO:WHEN the game is over
+// TODO:THEN I can save my initials and my score
+
+// function to end the Quiz
+function finishGame(){ 
+    // recalls the information from the previously generated class in HTML with associated elements (header, input field, etc.)
+    startQuiz.setAttribute("class", "hide");   
+    var allDoneScreen = document.getElementById("finish");
+    allDoneScreen.removeAttribute("class");
+    var finalScoreEl = document.getElementById("quiz-score");
+    
+    // final score is populated in the "Your final score is" section
+    if (secondsLeft >= 0) {
+        var timeLeft = secondsLeft;
+        clearInterval(stopClock);
+        finalScoreEl.textContent = timeLeft;
+    }
+    
+    // event Listener for the Submit button
+    submit.addEventListener("click", function(){
+        var name = playerName.value;
         
-        currentQuestionIndex++; 
-        
-        if (currentQuestionIndex >= questionList.length) {
-            finishQuiz();          
-            console.log("end game!")
+        // locally stores the objects values (initials and score) each time the quiz is taken
+        if(name !== ""){
+            alert("Please Enter your Initials!");
+            // ! need to reach out to BCS to figure out this one or update it to name === null.
             
-            } else {
-            startGame(currentQuestionIndex);
+        } else {
+            var endScore = {
+                intials:name,
+                score: timeLeft
+            }
+                    
+            var highScore = localStorage.getItem("highScore");
+            if(highScore === null) {
+                highScore = [];
+            } else{
+                highScore = JSON.parse(highScore);
+            }
+            highScore.push(endScore);
+            
+            var newScore = JSON.stringify(highScore);
+            localStorage.setItem("highScore", newScore);
+            
+            // takes the user to a new HTML page with high scores, once the Submitt button is pressed. 
+            window.location.replace("highscore.html");
         }
-        startQuiz.appendChild(answerDescription);
-    };
-
-    function finishQuiz(){ 
-        startQuiz.setAttribute("class", "hide");   
-        var allDoneScreen = document.getElementById("finish");
-        allDoneScreen.removeAttribute("class");
-        var finalScoreEl = document.getElementById("quiz-score");
+    }
+    );
+};
         
-        if (secondsLeft >= 0) {
-            var timeLeft = secondsLeft;
-            clearInterval(stopClock);
-            finalScoreEl.textContent = timeLeft;}
-
-        
-    };
-    
-    
