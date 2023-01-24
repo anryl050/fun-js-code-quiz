@@ -49,6 +49,7 @@ var timeEl = document.querySelector("#timer");
 var secondsLeft = 75;
 var stopClock = 0;
 
+
 // variables to start the quiz
 var startQuiz = document.getElementById("start-quiz");
 // variables for Start button
@@ -64,23 +65,6 @@ start.addEventListener ("click", function(){
     });   
 
 // function for Timer
-
-
-// function setTime() {
-//     if (stopClock === 0){
-//         stopClock = setInterval (function(){
-//             secondsLeft--;
-//             timeEl.textContent = secondsLeft;
-
-//             if (stopClock <= 0){
-//                 clearInterval(stopClock)
-//                 finishQuiz()
-//                 timeEl.textContent = "No more time left!"
-//             } 
-//          }, 1000);
-//         }
-//     startGame(currentQuestionIndex);
-//     };
 
 function setTime() {
 
@@ -150,21 +134,22 @@ function startGame(currentQuestionIndex){
                 secondsLeft = secondsLeft - incorrectAnswer;
                 answerDescription.textContent = "Wrong Answer!"
                 answerDescription.setAttribute("style", "color:red");
-            // }
-    }
+            }
+        
         currentQuestionIndex++; 
         
-        if (currentQuestionIndex >= questionList.lenght) {
-            finishQuiz();
+        if (currentQuestionIndex >= questionList.length) {
+            finishQuiz();          
             console.log("end game!")
-        } else {
+            
+            } else {
             startGame(currentQuestionIndex);
         }
         startQuiz.appendChild(answerDescription);
     };
 
-    function finishQuiz(){
-             
+    function finishQuiz(){ 
+        startQuiz.setAttribute("class", "hide");   
         var allDoneScreen = document.getElementById("finish");
         allDoneScreen.removeAttribute("class");
         var finalScoreEl = document.getElementById("quiz-score");
@@ -172,6 +157,9 @@ function startGame(currentQuestionIndex){
         if (secondsLeft >= 0) {
             var timeLeft = secondsLeft;
             clearInterval(stopClock);
-            finalScoreEl.textContent = timeLeft;
-    }
-    }
+            finalScoreEl.textContent = timeLeft;}
+
+        
+    };
+    
+    

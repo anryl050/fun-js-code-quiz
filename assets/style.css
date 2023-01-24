@@ -32,6 +32,13 @@ main {
   max-width: 450px; 
 }
 
+.results{
+  margin: auto;
+  max-width: 450px;
+  padding-top:10px;
+  margin-top: 100px;
+}
+
 #start-quiz, #questions {
   text-align: center;
   padding: 20px;
