@@ -177,28 +177,25 @@ function finishGame(){
         var name = playerName.value;
         
         // locally stores the objects values (initials and score) each time the quiz is taken
-        if(name === ''){
-            alert("Please Enter your Initials!");            
-        } else {
-            var endScore = {
-                intials:name,
-                score: timeLeft
-            }
-                    
-            var highScore = localStorage.getItem("highScore");
-            if(highScore === null) {
-                highScore = [];
-            } else{
-                highScore = JSON.parse(highScore);
-            }
-            highScore.push(endScore);
-            
-            var newScore = JSON.stringify(highScore);
-            localStorage.setItem("highScore", newScore);
-            
-            // takes the user to a new HTML page with high scores, once the Submitt button is pressed. 
-            window.location.replace("highscore.html");
-        }}
+        var endScore = {
+            initials:name,
+            score: timeLeft
+        }
+                
+        var highScore = localStorage.getItem("highScore");
+        if(highScore === null) {
+            highScore = [];
+        } else{
+            highScore = JSON.parse(highScore);
+        }
+        highScore.push(endScore);
+        
+        var newScore = JSON.stringify(highScore);
+        localStorage.setItem("highScore", newScore);
+        
+        // takes the user to a new HTML page with high scores, once the Submitt button is pressed. 
+        window.location.replace("highscore.html");
+    }
     );
 };
         

@@ -6,6 +6,7 @@ var clearBtn = document.querySelector("#clear-button");
 clearBtn.addEventListener("click", function(){
     localStorage.clear();
     location.reload();
+    console.log(highScore[0].initials);
 }
 );
 
@@ -14,7 +15,7 @@ var highScore = localStorage.getItem("highScore");
 highScore = JSON.parse(highScore);
 
 // creates the new list item for every new object added to the Score List
-if (highScore !== null) {
+if (highScore !== null){
 
     for (var i = 0; i < highScore.length; i++) {
         var newList = document.createElement("li");
@@ -22,4 +23,4 @@ if (highScore !== null) {
         scoreList.appendChild(newList);
         scoreList.appendChild(document.createElement("br"))
     }
-}
+};
