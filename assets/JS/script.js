@@ -177,10 +177,8 @@ function finishGame(){
         var name = playerName.value;
         
         // locally stores the objects values (initials and score) each time the quiz is taken
-        if(name !== ""){
-            alert("Please Enter your Initials!");
-            // ! need to reach out to BCS to figure out this one or update it to name === null.
-            
+        if(name === ''){
+            alert("Please Enter your Initials!");            
         } else {
             var endScore = {
                 intials:name,
@@ -200,8 +198,7 @@ function finishGame(){
             
             // takes the user to a new HTML page with high scores, once the Submitt button is pressed. 
             window.location.replace("highscore.html");
-        }
-    }
+        }}
     );
 };
         
